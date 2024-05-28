@@ -66,14 +66,14 @@ export class ProfessionalsService {
     });
   }
 
-  async findOne(name_professional: string) {
+  async findOne(id_professional: string) {
 
     let professional: Professional;
     
-    professional = await this.professionalRepository.findOne({where :{id: name_professional}});
+    professional = await this.professionalRepository.findOneBy({ id: id_professional});
     
     if(!professional){
-      throw new NotFoundException(`Professional with ${name_professional} not found`)
+      throw new NotFoundException(`Professional with ${id_professional} not found`)
     }
 
     return professional;

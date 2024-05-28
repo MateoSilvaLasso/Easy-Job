@@ -27,8 +27,8 @@ export class ProfessionalsController {
 
   @UseGuards(AuthGuard())
   @Get(':id')
-  findOne(@Param('name') name: string) {
-    return this.professionalsService.findOne(name);
+  findOne(@Param('id') id: string) {
+    return this.professionalsService.findOne(id);
   }
 
   @UseGuards(AuthGuard())
