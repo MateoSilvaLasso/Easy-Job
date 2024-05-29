@@ -20,6 +20,7 @@ export class CreateProfessionalDto {
     photo_url: string;
 
     @IsString()
+    @IsOptional()
     @MinLength(6)
     @MaxLength(50)
     @Matches(
