@@ -49,7 +49,7 @@ export class ProfessionalsController {
   @UseGuards(AuthGuard())
   @Roles(Role.Professional)
 
-  @Post('/service/:id_professional/:id_service')
+  @Post('service/:id_professional/:id_service')
   addService(@Param('id_professional') id_professional: string,@Param('id_service') id_service: string){
     return this.professionalsService.addServiceToProfessional(id_professional, id_service);
   }
