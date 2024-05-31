@@ -22,8 +22,9 @@ export class AuthGoogleController {
     try {
         //console.log(req.user)
       const token = await this.authService.oAuthLogin(req.user); 
-      res.redirect(`http://localhost:3000/oauth?token=${token.token}`);
+      res.redirect(`http://localhost:3000/oauth?id=${token.id}&email=${token.email}&token=${token.token}`);
       //res.redirect('http://localhost:3000/register')
+      return token
     } catch (err) {
       res.status(500).send({ success: false, message: err.message });
     }

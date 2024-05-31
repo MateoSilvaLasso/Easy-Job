@@ -55,11 +55,26 @@ export class AuthgoogleService {
         await this.clientService.create(client)
     }
     //console.log(existUser)
-    const payload = {
+
+    const createdtUser = await this.clientRepository.findOne({
+      where : {email},
+      select : {id:true, email:true, password:true}
+    })
+    let payload
+    if(!existUser){
+      payload = {
         id : existUser.id,
         email: user.email,
         name: user.name,
-    };
+      };
+    }else{
+      payload = {
+        id : createdtUser.id,
+        email: user.email,
+        name: user.name,
+      };
+    }
+    
   
     return {
         ...payload,
