@@ -24,10 +24,11 @@ import { SpecialityController } from './controllers/specialities.controller';
 import { LanguageService } from '../general_resources/services/language.service';
 import { CityService } from '../general_resources/services/city.service';
 import { GeneralResourcesModule } from '../general_resources/general_resources.module';
+import { RolesGuard } from '../auth/guards/user/user.guard';
 
 @Module({
   controllers: [ProfessionalsController, ServiceController, SpecialityController],
-  providers: [ProfessionalsService, ServiceService, SpecialityService, JwtStrategy, LanguageService, CityService],
+  providers: [ProfessionalsService, ServiceService, SpecialityService, JwtStrategy, LanguageService, CityService, RolesGuard],
   imports: [
     TypeOrmModule.forFeature([Professional]),
     TypeOrmModule.forFeature([Service]), 
@@ -44,7 +45,7 @@ import { GeneralResourcesModule } from '../general_resources/general_resources.m
       inject: [ ConfigService ],
       useFactory: ( configService: ConfigService ) => ({
           secret: configService.get('JWT_SECRET') || 'secret',
-          signOptions: {expiresIn:'2h'}
+          signOptions: {expiresIn:'20h'}
       })
     }),
     PaginationDto,
