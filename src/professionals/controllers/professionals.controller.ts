@@ -95,4 +95,9 @@ export class ProfessionalsController {
     return this.professionalsService.findCities(id_professional);
   }
 
+  @Get('city/:city/speciality/:speciality')
+  findByCityAndSpecialty( @Param('city') city: string, @Param('speciality') speciality: string) {
+    return this.professionalsService.findByCityAndSpeciality(city, speciality);
+  }
+
 }

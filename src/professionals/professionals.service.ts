@@ -207,6 +207,17 @@ export class ProfessionalsService {
     await this.professionalRepository.remove(professional);
   }
 
+  async findByCityAndSpeciality(cityName: string, specialityName: string): Promise<Professional[]> {
+    return this.professionalRepository
+        .createQueryBuilder('professional')
+        .leftJoinAndSelect('professional.cities', 'city')
+        .leftJoinAndSelect('professional.specialities', 'speciality')
+        .where('city.city_name = :cityName', { cityName })
+        .andWhere('speciality.speciality_name = :specialityName', { specialityName })
+        .getMany();
+  }
+
+
   private handleDBExceptions( error: any ) {
 
     if ( error.code === '23505' )
