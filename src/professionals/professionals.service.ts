@@ -84,16 +84,24 @@ export class ProfessionalsService {
     let professional: Professional;
     let service: Service;
 
-    if(isUUID(id_professional) && isUUID(id_service)){
-      professional = await this.findOne(id_professional);
-      service =  await this.serviceService.findOne(id_service);
+    professional = await this.findOne(id_professional);
+    if(!professional){
+      throw new NotFoundException('professional not found')
+    }
+    service =  await this.serviceService.findOne(id_service);
+
+    if(!service){
+      throw new NotFoundException('services not found')
     }
     
     const services = await this.findServices(id_professional)
+    
 
     if(!professional.services)
       professional.services = []
+
     
+
     professional.services.push(...services);
     professional.services.push(service)
 

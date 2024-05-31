@@ -49,6 +49,6 @@ import { ClientsService } from '../clients/clients.service';
       })
     })
   ],
-  exports: [TypeOrmModule, AuthModule]
+  exports: [TypeOrmModule, AuthModule, RolesGuard]
 })
 export class AuthModule {}

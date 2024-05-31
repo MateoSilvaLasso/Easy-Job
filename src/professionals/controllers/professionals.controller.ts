@@ -7,6 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {Roles} from "../../auth/decorators/roles.decorator";
 import {Role} from "../../auth/entities/role.enum";
+import { RolesGuard } from '../../auth/guards/user/user.guard';
 
 @Controller('professionals')
 export class ProfessionalsController {
@@ -46,10 +47,9 @@ export class ProfessionalsController {
   }
 
 
-  @UseGuards(AuthGuard())
+  @Get('service/:id_professional/:id_service')
+  @UseGuards(AuthGuard(), RolesGuard)
   @Roles(Role.Professional)
-
-  @Post('service/:id_professional/:id_service')
   addService(@Param('id_professional') id_professional: string,@Param('id_service') id_service: string){
     return this.professionalsService.addServiceToProfessional(id_professional, id_service);
   }
@@ -57,7 +57,7 @@ export class ProfessionalsController {
   @UseGuards(AuthGuard())
   @HttpCode(200)
   @Roles(Role.Professional)
-  @Post('specialities/:id_professional/:id_speciality')
+  @Get('specialities/:id_professional/:id_speciality')
   addSpeciality(@Param('id_professional') id_professional: string,@Param('id_speciality') id_speciality:string){
       return this.professionalsService.addSpecialityToProfessional(id_professional,id_speciality);
   }

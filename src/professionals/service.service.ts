@@ -40,7 +40,7 @@ export class ServiceService {
     let service: Service;
 
     
-    service = await this.serviceRepository.findOneBy({id: name_service});
+    service = await this.serviceRepository.findOne({where :{id: name_service}});
     
 
     if(!service){
