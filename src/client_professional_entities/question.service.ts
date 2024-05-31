@@ -101,4 +101,11 @@ export class QuestionService {
     throw new InternalServerErrorException('Unexpected error, check server logs');
 
   }
+
+  async getQuestionsByProfessional(id_professional: string): Promise<Question[]> {
+    return this.questionRepository.find({
+      where: { professional: { id: id_professional } },
+      relations: ['client'],
+    });
+  }
 }

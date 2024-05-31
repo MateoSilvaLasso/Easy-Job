@@ -67,4 +67,10 @@ export class ReviewService {
     await this.reviewRepository.remove(review);
   }
 
+  async getReviewsByProfessional(id_professional: string): Promise<Review[]> {
+    return this.reviewRepository.find({
+      where: { professional: { id: id_professional } },
+      relations: ['client'],
+    });
+  }
 }

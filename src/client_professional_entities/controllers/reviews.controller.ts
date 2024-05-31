@@ -36,5 +36,9 @@ export class ReviewsController {
         return this.reviewsService.remove(id_review);
     }
 
+    @Get('professional/:id_professional')
+    async getReviewsByProfessional(@Param('id_professional') id_professional: string) {
+        return this.reviewsService.getReviewsByProfessional(id_professional);
+    }
 
 }

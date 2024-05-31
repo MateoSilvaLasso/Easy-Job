@@ -38,4 +38,9 @@ export class QuestionController {
       remove(@Param('id') id: string) {
      return this.questionService.remove(id);
    }
+
+   @Get('professional/:id_professional')
+      getQuestionsByProfessional(@Param('id_professional') id_professional: string) {
+         return this.questionService.getQuestionsByProfessional(id_professional);
+      }
 }

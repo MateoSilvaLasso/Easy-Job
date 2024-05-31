@@ -45,7 +45,7 @@ import { ClientsService } from '../clients/clients.service';
       inject: [ ConfigService ],
       useFactory: ( configService: ConfigService ) => ({
           secret: configService.get('JWT_SECRET') || 'secret',
-          signOptions: {expiresIn:'2h'}
+          signOptions: {expiresIn:'20h'}
       })
     })
   ],
