@@ -112,6 +112,48 @@ export class ProfessionalsService {
     
   }
   
+  async DeleteServiceToProfessional(id_professional:string, id_service:string){
+    let professional: Professional;
+    let service: Service;
+
+    professional = await this.professionalRepository.findOne({where :{id: id_professional}, relations:['services']});
+    if(!professional){
+      throw new NotFoundException('professional not found')
+    }
+    service =  await this.serviceService.findOne(id_service);
+
+    if(!service){
+      throw new NotFoundException('services not found')
+    }
+
+    professional.services = professional.services.filter(s => s.id !== id_service);
+
+    await this.professionalRepository.save(professional);
+
+  }
+
+  async DeleteSpecialityToProfessional(id_professional:string, id_speciality:string){
+    let professional: Professional;
+    let speciality: Speciality;
+
+    professional = await this.professionalRepository.findOne({where :{id: id_professional}, relations:['specialities']});
+    if(!professional){
+      throw new NotFoundException('professional not found')
+    }
+    speciality =  await this.specialityService.findOne(id_speciality);
+
+    if(!speciality){
+      throw new NotFoundException('services not found')
+    }
+
+    console.log(speciality.id)
+
+    professional.specialities = professional.specialities.filter(s => s.id !== id_speciality);
+
+    await this.professionalRepository.save(professional);
+
+  }
+
   async addSpecialityToProfessional(id_professional: string, id_speciality: string) {
     let professional: Professional;
     let speciality: Speciality;
@@ -154,6 +196,8 @@ export class ProfessionalsService {
 
     return professional;
   }
+
+
 
   async findServices(id_professional:string){
     return await this.serviceRepository.createQueryBuilder('service')
