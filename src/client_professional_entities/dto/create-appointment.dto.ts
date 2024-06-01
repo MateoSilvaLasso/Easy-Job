@@ -12,6 +12,12 @@ export class CreateAppointmentDto {
     @IsString()
     location: string;
 
+    @IsString()
+    hour: string;
+
+    @IsString()
+    service: string;
+
     @ValidateNested()
     @Type(() => Client)
     client: Client

@@ -95,6 +95,7 @@ export class ProfessionalsController {
     return this.professionalsService.findCities(id_professional);
   }
 
+
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(Role.Professional)
   @Delete('oneservice/:id_professional/:id_service')
@@ -107,6 +108,12 @@ export class ProfessionalsController {
   @Delete('onespeaciality/:id_professional/:id_speciality')
   deleteSpecialityToProfessional(@Param('id_professional') id_professional:string, @Param('id_speciality') id_speciality:string){
     return this.professionalsService.DeleteSpecialityToProfessional(id_professional, id_speciality)
+  
+  }
+
+  @Get('city/:city/speciality/:speciality')
+  findByCityAndSpecialty( @Param('city') city: string, @Param('speciality') speciality: string) {
+    return this.professionalsService.findByCityAndSpeciality(city, speciality);
   }
 
 }

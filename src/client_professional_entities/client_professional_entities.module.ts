@@ -9,6 +9,7 @@ import { AppointmentService } from './appointment.service';
 import { Appointment } from './entities/appointment.entity';
 import { QuestionController } from './controllers/questions.controller';
 import { ReviewsController } from './controllers/reviews.controller';
+import { AppointmentController } from './controllers/appointment.controller';
 import { PaginationDto } from '../common/dtos/pagination.dto';
 import { QuestionService } from './question.service';
 import { ReviewService } from './review.service';
@@ -26,7 +27,7 @@ import {City} from "../general_resources/entities/city.entity";
 import { GeneralResourcesModule } from '../general_resources/general_resources.module';
 
 @Module({
-  controllers: [QuestionController, ReviewsController ],
+  controllers: [QuestionController, ReviewsController, AppointmentController ],
   providers: [AppointmentService, QuestionService, ReviewService, ProfessionalsService, ClientsService, ServiceService,
     SpecialityService, JwtStrategy
   ],
