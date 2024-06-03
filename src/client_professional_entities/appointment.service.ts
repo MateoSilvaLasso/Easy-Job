@@ -23,28 +23,19 @@ export class AppointmentService {
     private readonly paymentMethodService: PaymentMethodService,
   ) {}
 
-  async create(clientId: string, professionalId: string, paymentMethodName: string, createAppointmentDto: CreateAppointmentDto) {
+  async create(clientId: string, professionalId: string, payment_method_name: string, createAppointmentDto: CreateAppointmentDto) {
 
       const client = await this.clientService.findOne(clientId);
       const professional = await this.professionalsService.findOne(professionalId);
+      const paymentMethod = await this.paymentMethodService.findOneByName(payment_method_name);
 
-      if (!client || !professional) {
-        throw new NotFoundException('Cliente o profesional no encontrado');
-      }
-
-      const paymentMethodDto: CreatePaymentMethodDto = {
-        payment_method_name: paymentMethodName
-      };
-      const paymentMethod = await this.paymentMethodService.create(paymentMethodDto);
-
-      if (!paymentMethod) {
-        throw new InternalServerErrorException('Error al crear el método de pago');
-      }
-
-      createAppointmentDto.payment_method.id = paymentMethod.id;
+      if (!client || !professional || !paymentMethod) {
+        throw new NotFoundException('Cliente, profesional o método de pago no encontrado');
+    }
 
       createAppointmentDto.client = client;
       createAppointmentDto.professional = professional;
+      createAppointmentDto.payment_method = paymentMethod;
 
       const appointment = this.appointmentRepository.create(createAppointmentDto);
       return this.appointmentRepository.save(appointment);

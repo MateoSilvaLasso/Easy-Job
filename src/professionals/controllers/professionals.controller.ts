@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Query } from '@nestjs/common';
 import { ProfessionalsService } from '../professionals.service';
 import { CreateProfessionalDto } from '../dto/create-professional.dto';
 import {PaginationDto} from '../../common/dtos/pagination.dto'
@@ -21,8 +21,15 @@ export class ProfessionalsController {
 
   @UseGuards(AuthGuard())
   @Get()
-  findAll() {
-    return this.professionalsService.findAll(10,0);
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    const [results, total] = await this.professionalsService.findAll(limit, (page - 1) * limit);
+    return {
+      data: results,
+      total,
+    };
   }
 
   @UseGuards(AuthGuard())
