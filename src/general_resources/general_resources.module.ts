@@ -12,18 +12,30 @@ import { LanguageController } from './controllers/language.controller';
 import { PaymentMethodService } from './services/paymentMethod.service';
 import { PaymentMethodController } from './controllers/paymentMethod.controller';
 import { Appointment } from '../client_professional_entities/entities/appointment.entity';
+import { AppointmentService } from '../client_professional_entities/appointment.service';
+import { ClientsService } from '../clients/clients.service';
+import { ProfessionalsService } from '../professionals/professionals.service';
+import { Client } from '../clients/entities/client.entity';
+import { ServiceService } from '../professionals/service.service';
+import { Service } from '../professionals/entities/service.entity';
+import { Type } from 'class-transformer';
+import { Speciality } from '../professionals/entities/speciality.entity';
+import { SpecialityService } from '../professionals/speciality.service';
 
 @Module({
   controllers: [CityController, LanguageController, PaymentMethodController],
-  providers: [CityService, LanguageService, PaymentMethodService],
+  providers: [CityService, LanguageService, PaymentMethodService, AppointmentService, ClientsService, ProfessionalsService, ServiceService, SpecialityService],
   imports: [
     TypeOrmModule.forFeature([City]),
     TypeOrmModule.forFeature([Department]),
     TypeOrmModule.forFeature([Language]),
     TypeOrmModule.forFeature([PaymentMethod]),
     TypeOrmModule.forFeature([Professional]),
-    TypeOrmModule.forFeature([Appointment])
+    TypeOrmModule.forFeature([Appointment]),
+    TypeOrmModule.forFeature([Client]),
+    TypeOrmModule.forFeature([Service]),
+    TypeOrmModule.forFeature([Speciality])
   ],
-  exports: [GeneralResourcesModule, CityService, LanguageService, TypeOrmModule, PaymentMethodService]
+  exports: [TypeOrmModule,GeneralResourcesModule, CityService, LanguageService, PaymentMethodService]
 })
 export class GeneralResourcesModule {}

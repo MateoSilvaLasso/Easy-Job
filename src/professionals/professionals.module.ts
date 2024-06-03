@@ -25,10 +25,13 @@ import { LanguageService } from '../general_resources/services/language.service'
 import { CityService } from '../general_resources/services/city.service';
 import { GeneralResourcesModule } from '../general_resources/general_resources.module';
 import { RolesGuard } from '../auth/guards/user/user.guard';
+import { AppointmentService } from '../client_professional_entities/appointment.service';
+import { AppointmentController } from '../client_professional_entities/controllers/appointment.controller';
+import { ClientsService } from '../clients/clients.service';
 
 @Module({
-  controllers: [ProfessionalsController, ServiceController, SpecialityController],
-  providers: [ProfessionalsService, ServiceService, SpecialityService, JwtStrategy, LanguageService, CityService, RolesGuard],
+  controllers: [ProfessionalsController, ServiceController, SpecialityController, AppointmentController],
+  providers: [ProfessionalsService, ServiceService, SpecialityService, JwtStrategy, LanguageService, CityService, RolesGuard,AppointmentService, ClientsService],
   imports: [
     TypeOrmModule.forFeature([Professional]),
     TypeOrmModule.forFeature([Service]), 

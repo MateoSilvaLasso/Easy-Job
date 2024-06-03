@@ -26,10 +26,11 @@ import { AuthGoogleController } from './controller/auth-google.controller';
 import { AuthAdminService } from './services/auth-admin.service';
 import { AuthgoogleService } from './services/auth-google.service';
 import { ClientsService } from '../clients/clients.service';
+import { ProfessionalsController } from '../professionals/controllers/professionals.controller';
 //import { JwtProfessionalStrategy } from './strategies/jwt-professional.strategy';
 
 @Module({
-  controllers: [AuthClientController, AuthProfessionalController, AuthAdminController, AuthGoogleController],
+  controllers: [AuthClientController, AuthProfessionalController, AuthAdminController, AuthGoogleController, ProfessionalsController],
   providers: [AuthClientService, AuthProfessionalService, JwtStrategy,RolesGuard, ProfessionalsService, GoogleStrategy, GoogleOauthGuard, AuthAdminService, AuthgoogleService, ClientsService],
   imports: [
     ConfigModule,

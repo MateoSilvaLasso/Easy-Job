@@ -34,7 +34,7 @@ export class AppointmentController {
   }
 
    @UseGuards(AuthGuard(),RolesGuard)
-   @Roles(Role.Client)
+   @Roles(Role.Client, Role.Professional)
    @Delete(':id')
       remove(@Param('id') id: string) {
      return this.appointmentService.remove(id);

@@ -34,7 +34,7 @@ import { PaymentMethodService } from '../general_resources/services/paymentMetho
   providers: [AppointmentService, QuestionService, ReviewService, ProfessionalsService, ClientsService, ServiceService,
     SpecialityService, JwtStrategy, PaymentMethodService
   ],
-  exports: [AppointmentService, ClientProfessionalEntitiesModule],
+  
   imports: [
     TypeOrmModule.forFeature([Question]),
     TypeOrmModule.forFeature([Review]),
@@ -57,5 +57,6 @@ import { PaymentMethodService } from '../general_resources/services/paymentMetho
     }), 
     ConfigModule
   ], 
+  exports: [ClientProfessionalEntitiesModule, AppointmentService, QuestionService, ReviewService],
 })
 export class ClientProfessionalEntitiesModule {}

@@ -18,6 +18,6 @@ import { DataSource } from 'typeorm';
     TypeOrmModule.forFeature([Question]),
     TypeOrmModule.forFeature([Review])
   ],
-  exports: [ClientsModule]
+  exports: [ClientsModule, ClientsService]
 })
 export class ClientsModule {}
