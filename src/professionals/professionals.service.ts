@@ -64,6 +64,21 @@ export class ProfessionalsService {
       return [results, total];
     }
 
+
+    async findByCityAndSpeciality(cityName: string, specialityName: string, limit: number, offset: number): Promise<[Professional[], number]> {
+      const [results, total] = await this.professionalRepository
+        .createQueryBuilder('professional')
+        .leftJoinAndSelect('professional.cities', 'city')
+        .leftJoinAndSelect('professional.specialities', 'speciality')
+        .where('city.city_name = :cityName', { cityName })
+        .andWhere('speciality.speciality_name = :specialityName', { specialityName })
+        .skip(offset)
+        .take(limit)
+        .getManyAndCount();
+
+      return [results, total];
+    }
+
   async findOne(id_professional: string) {
 
     let professional: Professional;
@@ -247,16 +262,6 @@ export class ProfessionalsService {
   async remove(id: string) {
     const professional = await this.findOne(id);
     await this.professionalRepository.remove(professional);
-  }
-
-  async findByCityAndSpeciality(cityName: string, specialityName: string): Promise<Professional[]> {
-    return this.professionalRepository
-        .createQueryBuilder('professional')
-        .leftJoinAndSelect('professional.cities', 'city')
-        .leftJoinAndSelect('professional.specialities', 'speciality')
-        .where('city.city_name = :cityName', { cityName })
-        .andWhere('speciality.speciality_name = :specialityName', { specialityName })
-        .getMany();
   }
 
 
