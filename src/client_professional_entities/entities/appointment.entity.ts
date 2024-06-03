@@ -24,7 +24,7 @@ export class Appointment {
     @ManyToOne(() => Client, (client) => client.questions)
     client: Client;
 
-    @ManyToOne(() => Professional, (professional) => professional.questions)
+    @ManyToOne(() => Professional, (professional) => professional.appointments)
     professional: Professional;
 
     @ManyToOne(() => PaymentMethod, (payment_method) => payment_method.appointments)

@@ -12,6 +12,7 @@ import {SpecialityService} from './speciality.service';
 import {City} from "../general_resources/entities/city.entity";
 import { LanguageService } from '../general_resources/services/language.service';
 import { CityService } from '../general_resources/services/city.service';
+import { Appointment } from '../client_professional_entities/entities/appointment.entity';
 
 @Injectable()
 export class ProfessionalsService {
@@ -28,6 +29,8 @@ export class ProfessionalsService {
     private readonly specialityRepository: Repository<Speciality>,
     @InjectRepository(City)
     private readonly CityRepository: Repository<City>,
+    @InjectRepository(Appointment)
+    private readonly AppoimentRepository: Repository<Appointment>,
     private readonly serviceService: ServiceService,
     private readonly specialityService: SpecialityService,
     private readonly languageService: LanguageService,
@@ -209,6 +212,17 @@ export class ProfessionalsService {
         .innerJoin('speciality.professionals', 'professional')
         .where('professional.id = :id', {id: id_professional})
         .getMany()
+  }
+
+  async findAppoiments(id_professional:string){
+    const appoiments = await this.AppoimentRepository.createQueryBuilder('appointment')
+    .leftJoinAndSelect('appointment.client', 'client')
+    .leftJoinAndSelect('appointment.professional', 'professional')
+    .leftJoinAndSelect('appointment.paymentMethod', 'paymentMethod')
+    .where('professional.id = :id', { id: id_professional })
+    .getMany();
+    return appoiments
+
   }
 
   async findByCity(city_name:string){
