@@ -16,8 +16,8 @@ export class PaymentMethodController {
         return this.paymentMethodService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.paymentMethodService.findOne(id);
+    @Get(':payment_method_name')
+    findOne(@Param('payment_method_name') payment_method_name: string) {
+        return this.paymentMethodService.findOneByName(payment_method_name);
     }
 }

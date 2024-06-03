@@ -56,15 +56,13 @@ export class ProfessionalsService {
       return professional;
     }
 
-  findAll(limit:number, offset:number) {
-    limit = 10 
-    offset= 0
-    
-    return this.professionalRepository.find({
-      take: limit, 
-      skip: offset
-    });
-  }
+    async findAll(limit: number, offset: number): Promise<[Professional[], number]> {
+      const [results, total] = await this.professionalRepository.findAndCount({
+        skip: offset,
+        take: limit,
+      });
+      return [results, total];
+    }
 
   async findOne(id_professional: string) {
 

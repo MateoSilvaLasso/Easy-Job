@@ -15,9 +15,9 @@ export class AppointmentController {
   ) {}
 
 
-  @Post(':client_id/:professional_id/:paymentMethodName')
-  create(@Body() createAppointmentDto: CreateAppointmentDto, @Param('client_id') client_id: string, @Param('professional_id') professional_id: string, @Param('paymentMethodName') paymentMethodName : string) {
-    return this.appointmentService.create(client_id,professional_id,paymentMethodName, createAppointmentDto);
+  @Post(':client_id/:professional_id/:payment_method_name')
+  create(@Body() createAppointmentDto: CreateAppointmentDto, @Param('client_id') client_id: string, @Param('professional_id') professional_id: string, @Param('paymentMethod_name') payment_method_name : string) {
+    return this.appointmentService.create(client_id,professional_id,payment_method_name, createAppointmentDto);
   }
 
    
