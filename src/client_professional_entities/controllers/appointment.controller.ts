@@ -14,11 +14,10 @@ export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService
   ) {}
 
-  @UseGuards(AuthGuard(),RolesGuard)
-  @Roles(Role.Client)
-  @Post(':client_id/:professional_id')
-  create(@Body() createAppointmentDto: CreateAppointmentDto, @Param('client_id') client_id: string, @Param('professional_id') professional_id: string ) {
-    return this.appointmentService.create(client_id,professional_id,createAppointmentDto);
+
+  @Post(':client_id/:professional_id/:paymentMethodName')
+  create(@Body() createAppointmentDto: CreateAppointmentDto, @Param('client_id') client_id: string, @Param('professional_id') professional_id: string, @Param('paymentMethodName') paymentMethodName : string) {
+    return this.appointmentService.create(client_id,professional_id,paymentMethodName, createAppointmentDto);
   }
 
    

@@ -8,6 +8,8 @@ import { isUUID } from 'class-validator';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { ClientsService } from '../clients/clients.service';
 import { ProfessionalsService } from '../professionals/professionals.service';
+import { PaymentMethodService } from 'src/general_resources/services/paymentMethod.service';
+import { CreatePaymentMethodDto } from 'src/general_resources/dto/create-paymentMethod';
 
 @Injectable()
 export class AppointmentService {
@@ -17,23 +19,35 @@ export class AppointmentService {
     @InjectRepository(Appointment)
     private readonly appointmentRepository: Repository<Appointment>,
     private readonly clientService: ClientsService, 
-    private readonly professionalsService: ProfessionalsService
+    private readonly professionalsService: ProfessionalsService,
+    private readonly paymentMethodService: PaymentMethodService,
   ) {}
 
-  async create(id_client: string, id_professional: string, createApointmentDto: CreateAppointmentDto) {
-    
-    const appointment =  this.appointmentRepository.create(createApointmentDto);
+  async create(clientId: string, professionalId: string, paymentMethodName: string, createAppointmentDto: CreateAppointmentDto) {
 
-    const client = await this.clientService.findOne(id_client);
+      const client = await this.clientService.findOne(clientId);
+      const professional = await this.professionalsService.findOne(professionalId);
 
-    const professional = await this.professionalsService.findOne(id_professional);
+      if (!client || !professional) {
+        throw new NotFoundException('Cliente o profesional no encontrado');
+      }
 
-    appointment.client = client;
-    appointment.professional = professional;
-    
-    await this.appointmentRepository.save(appointment);
+      const paymentMethodDto: CreatePaymentMethodDto = {
+        payment_method_name: paymentMethodName
+      };
+      const paymentMethod = await this.paymentMethodService.create(paymentMethodDto);
 
-    return appointment;
+      if (!paymentMethod) {
+        throw new InternalServerErrorException('Error al crear el método de pago');
+      }
+
+      createAppointmentDto.payment_method.id = paymentMethod.id;
+
+      createAppointmentDto.client = client;
+      createAppointmentDto.professional = professional;
+
+      const appointment = this.appointmentRepository.create(createAppointmentDto);
+      return this.appointmentRepository.save(appointment);
   }
 
   findAll( paginationDto: PaginationDto ) {

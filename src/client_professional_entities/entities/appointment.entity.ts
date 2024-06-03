@@ -1,29 +1,32 @@
-import { Entity, Column, PrimaryGeneratedColumn, Double, ManyToOne, ManyToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Client } from "../../clients/entities/client.entity";
 import { Professional } from "../../professionals/entities/professional.entity";
-import { Payment_method } from "../../general_resources/entities/payment_method.entity";
+import { PaymentMethod } from "../../general_resources/entities/payment_method.entity";
 
 @Entity()
 export class Appointment {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({type: 'timestamp'})
-    date: number;
+    @Column({ type: 'text' })
+    date: string;  
 
-    @Column({type: 'point'})
+    @Column({ type: 'text' })
     location: string;
 
-    @ManyToOne(()=>Client, (client)=>client.questions)
-    client: Client
+    @Column({ type: 'text' })
+    hour: string;
 
-    @ManyToOne(()=>Professional, (professional)=>professional.questions)
-    professional: Professional
+    @Column({ type: 'text' })
+    service: string;
 
-    @ManyToOne(()=>Payment_method, (payment_method)=>payment_method.appointments)
-    payment_method: Payment_method
+    @ManyToOne(() => Client, (client) => client.questions)
+    client: Client;
 
+    @ManyToOne(() => Professional, (professional) => professional.questions)
+    professional: Professional;
 
+    @ManyToOne(() => PaymentMethod, (payment_method) => payment_method.appointments)
+    paymentMethod: PaymentMethod;  
 }
-
