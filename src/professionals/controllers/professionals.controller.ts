@@ -33,6 +33,21 @@ export class ProfessionalsController {
     };
   }
 
+  @Get('city/:city/speciality/:speciality')
+  async findByCityAndSpecialty( 
+    @Param('city') city: string, 
+    @Param('speciality') speciality: string,
+    @Query('page') page:number = 1, 
+    @Query('limit') limit: number= 10
+  ) {
+    const [results, total] = await this.professionalsService.findByCityAndSpeciality(city, speciality, limit, (page - 1) * limit);
+    
+    return {
+      data: results,
+      total,
+    };
+  }
+
   @UseGuards(AuthGuard())
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -116,11 +131,6 @@ export class ProfessionalsController {
   deleteSpecialityToProfessional(@Param('id_professional') id_professional:string, @Param('id_speciality') id_speciality:string){
     return this.professionalsService.DeleteSpecialityToProfessional(id_professional, id_speciality)
   
-  }
-
-  @Get('city/:city/speciality/:speciality')
-  findByCityAndSpecialty( @Param('city') city: string, @Param('speciality') speciality: string) {
-    return this.professionalsService.findByCityAndSpeciality(city, speciality);
   }
 
 }
