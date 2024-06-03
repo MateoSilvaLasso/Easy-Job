@@ -1,13 +1,13 @@
 import { Type } from "class-transformer";
 import { Client } from "../../clients/entities/client.entity";
 import { Professional } from "../../professionals/entities/professional.entity";
-import { IsNumber, IsString, ValidateNested } from "class-validator";
-import { Payment_method } from "../../general_resources/entities/payment_method.entity";
+import { IsNumber, IsString, ValidateNested, IsUUID } from "class-validator";
+import { PaymentMethod } from "../../general_resources/entities/payment_method.entity";
 
 export class CreateAppointmentDto {
 
-    @IsNumber()
-    date: number;
+    @IsString()
+    date: string; 
 
     @IsString()
     location: string;
@@ -27,8 +27,7 @@ export class CreateAppointmentDto {
     professional: Professional
     
     @ValidateNested()
-    @Type(() => Payment_method)
-    payment_method: Payment_method
-
+    @Type(() => PaymentMethod)
+    payment_method: PaymentMethod
 }
 
