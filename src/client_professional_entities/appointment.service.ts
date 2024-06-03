@@ -8,8 +8,8 @@ import { isUUID } from 'class-validator';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { ClientsService } from '../clients/clients.service';
 import { ProfessionalsService } from '../professionals/professionals.service';
-import { PaymentMethodService } from 'src/general_resources/services/paymentMethod.service';
-import { CreatePaymentMethodDto } from 'src/general_resources/dto/create-paymentMethod';
+import { PaymentMethodService } from '../general_resources/services/paymentMethod.service';
+import { CreatePaymentMethodDto } from '../general_resources/dto/create-paymentMethod';
 
 @Injectable()
 export class AppointmentService {
@@ -33,12 +33,18 @@ export class AppointmentService {
         throw new NotFoundException('Cliente, profesional o método de pago no encontrado');
     }
 
+      
+
       createAppointmentDto.client = client;
       createAppointmentDto.professional = professional;
-      createAppointmentDto.payment_method = paymentMethod;
+      createAppointmentDto.paymentMethod = paymentMethod;
+
+      
 
       const appointment = this.appointmentRepository.create(createAppointmentDto);
-      return this.appointmentRepository.save(appointment);
+      console.log(appointment)
+      await this.appointmentRepository.save(appointment);
+      return appointment;
   }
 
   findAll( paginationDto: PaginationDto ) {
