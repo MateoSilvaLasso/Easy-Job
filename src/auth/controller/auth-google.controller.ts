@@ -22,7 +22,7 @@ export class AuthGoogleController {
     try {
         //console.log(req.user)
       const token = await this.authService.oAuthLogin(req.user); 
-      res.redirect(`http://localhost:3000/oauth?id=${token.id}&email=${token.email}&token=${token.token}`);
+      res.redirect(`https://easy-job-frontend.vercel.app/oauth?id=${token.id}&email=${token.email}&token=${token.token}`);
       //res.redirect('http://localhost:3000/register')
       return token
     } catch (err) {
